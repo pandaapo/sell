@@ -1,0 +1,32 @@
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  path: /var/log/tomcat/
+#  file: /var/log/tomcat/sell.log
+#  level:
+#    com.panda.sell.LoggerTest : debug
+#  level: debug
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.1.4/springboot-wxorder?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+  mvc:
+      static-path-pattern: /**
+
+server:
+  servlet:
+    context-path: /sell
+
+wechat:
+  mpAppId: wxe56e73d8f0c6c69b
+  mpAppSecret: e1fc96b75176b172d863d61767a604cb
+  mchId: 1409146202
+  mchKey: c976503d34ca432c601361f969fd8d85
+  keyPath: /xxx
+  notifyUrl: xxx
