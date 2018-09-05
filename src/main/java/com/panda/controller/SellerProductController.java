@@ -6,6 +6,7 @@ import com.panda.exception.SellException;
 import com.panda.form.ProductForm;
 import com.panda.service.CategoryService;
 import com.panda.service.ProductInfoService;
+import com.panda.utils.KeyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,8 +126,14 @@ public class SellerProductController {
             return new ModelAndView("common/error", map);
         }
 
+        ProductInfo productInfo = new ProductInfo();
         try{
-            ProductInfo productInfo = productInfoService.findOne(form.getProductId());
+            //如果producId为空，说明是新增
+            if(StringUtils.isNotEmpty(form.getProductId())){
+                productInfo = productInfoService.findOne(form.getProductId());
+            } else {
+                form.setProductId(KeyUtil.getUniqueKey());
+            }
             BeanUtils.copyProperties(form, productInfo);
             productInfoService.save(productInfo);
         }catch (SellException e) {

@@ -11,7 +11,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.1.4/springboot-wxorder?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost/springboot-wxorder?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
   jackson:
@@ -26,6 +26,8 @@ server:
 wechat:
   mpAppId: wxe56e73d8f0c6c69b
   mpAppSecret: e1fc96b75176b172d863d61767a604cb
+  openAppId: xxxx
+  openAppSecret: xxxx
   mchId: 1409146202
   mchKey: c976503d34ca432c601361f969fd8d85
   keyPath: /xxx
