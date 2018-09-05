@@ -1,5 +1,6 @@
 package com.panda.controller;
 
+import com.panda.config.ProjectUrlConfig;
 import com.panda.enums.ResultEnum;
 import com.panda.exception.SellException;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +26,12 @@ public class WechatController {
     @Autowired
     private WxMpService wxOpenService;
 
+    @Autowired
+    private ProjectUrlConfig projectUrlConfig;
+
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl){
-        String url = "http://192.168.1.49:8080/sell/wechat/userInfo";
+        String url = projectUrlConfig.getWechatMpAuthorize() + "/sell/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE, returnUrl);
         return "redirect:" + redirectUrl;
     }
@@ -49,7 +53,7 @@ public class WechatController {
 
     @GetMapping("/qrAuthorize")
     public String qrAuthorize(@RequestParam("returnUrl") String returnUrl){
-        String url = "http://192.168.1.49:8080/sell/wechat/qrUserInfo";
+        String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qrUserInfo";
         String redirectUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, URLDecoder.decode(returnUrl));
         return "redirect:" + redirectUrl;
     }
@@ -64,6 +68,7 @@ public class WechatController {
             log.error("【微信网页授权】{}", e);
             throw new SellException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
         }
+        log.info("wxMpOAuth2AccessToken={}", wxMpOAuth2AccessToken);
         String openId = wxMpOAuth2AccessToken.getOpenId();
 
         return "redirect:" + returnUrl + "?openid=" +openId;

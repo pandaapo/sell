@@ -19,12 +19,12 @@ public class WechatOpenConfig {
     @Bean
     public WxMpService wxOpenService(){
         WxMpService wxOpenService = new WxMpServiceImpl();
-        wxOpenService().setWxMpConfigStorage(wxMpConfigStorage());
+        wxOpenService.setWxMpConfigStorage(wxOpenConfigStorage());
         return wxOpenService;
     };
 
     @Bean
-    public WxMpConfigStorage wxMpConfigStorage(){
+    public WxMpConfigStorage wxOpenConfigStorage(){
         WxMpInMemoryConfigStorage wxMpInMemoryConfigStorage = new WxMpInMemoryConfigStorage();
         wxMpInMemoryConfigStorage.setAppId(accountConfig.getOpenAppId());
         wxMpInMemoryConfigStorage.setSecret(accountConfig.getOpenAppSecret());
