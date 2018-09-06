@@ -37,6 +37,6 @@ wechat:
   notifyUrl: xxx
 
 projecturl:
-  wechatMpAuthorize: 192.168.1.3:8080
-  wechatOpenAuthorize: 192.168.1.3:8080
-  sell:
+  wechatMpAuthorize: http://192.168.1.3:8080
+  wechatOpenAuthorize: http://192.168.1.3:8080
+  sell: http://192.168.1.3:8080

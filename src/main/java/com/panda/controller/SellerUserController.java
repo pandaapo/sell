@@ -62,7 +62,8 @@ public class SellerUserController {
         //3.设置token至cookie
         CookieUtil.set(response, CookieConstant.TOKEN, token, expire);
 
-        return new ModelAndView("redirect:" + projectUrlConfig.getSell() + "/seller/order/list");
+//        return new ModelAndView("redirect:/seller/order/list");        //✔✔✔
+        return new ModelAndView("redirect:" + projectUrlConfig.getSell()+ "/sell/seller/order/list");    //配置的路径中如果没有http://就不行
     }
 
 
