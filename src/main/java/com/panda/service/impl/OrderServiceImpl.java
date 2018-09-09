@@ -9,12 +9,11 @@ import com.panda.dto.OrderDTO;
 import com.panda.enums.OrderStatusEnum;
 import com.panda.enums.PayStatusEnum;
 import com.panda.enums.ResultEnum;
+import com.panda.exception.ResponseBankException;
 import com.panda.exception.SellException;
 import com.panda.repository.OrderDetailRepository;
 import com.panda.repository.OrderMasterRepository;
-import com.panda.service.OrderService;
-import com.panda.service.PayService;
-import com.panda.service.ProductInfoService;
+import com.panda.service.*;
 import com.panda.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -48,6 +47,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private PayService payService;
 
+    @Autowired
+    private PushMessageService pushMessageService;
+
+    @Autowired
+    private WebSocket webSocket;
+
     @Override
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
@@ -59,6 +64,7 @@ public class OrderServiceImpl implements OrderService {
             ProductInfo productInfo = productInfoService.findOne(orderDetail.getProductId());
             if(productInfo == null){
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+//                throw new ResponseBankException();
             }
             //计算订单总价
             orderAmout = productInfo.getProductPrice().multiply(new BigDecimal( orderDetail.getProductQuantity()))
@@ -84,6 +90,9 @@ public class OrderServiceImpl implements OrderService {
                 -> new CarDTO(e.getProductId(), e.getProductQuantity())
         ).collect(Collectors.toList());
         productInfoService.decreaseStock(carDTOList);
+
+        //发送websocket消息
+        webSocket.sendMessage("有新订单，订单ID:" + orderDTO.getOrderId());
 
         return orderDTO;
     }
@@ -171,6 +180,10 @@ public class OrderServiceImpl implements OrderService {
             log.error("完结订单状态更新失败,orderMasterrrrr={}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
+
+        //推送微信模板消息
+        pushMessageService.orderStatus(orderDTO);
+
         return  orderDTO;
     }
 

@@ -1,10 +1,12 @@
 package com.panda.exception;
 
 import com.panda.enums.ResultEnum;
+import lombok.Getter;
 
 /**
  * 统一异常
  */
+@Getter
 public class SellException extends RuntimeException{
 
     private Integer code;

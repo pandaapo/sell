@@ -44,7 +44,7 @@ public class SellerAuthorizeAspect {
 
         //查询cookie
         Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
-        if(cookie != null){
+        if(cookie == null){
             log.warn("【登录校验】Cookie中查不到token");
             throw new SellerAuthorizeException();
         }
