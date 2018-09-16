@@ -1,6 +1,8 @@
 package com.panda.service.impl;
 
 import com.panda.dataobject.ProductCategory;
+import com.panda.dataobject.dao.ProductCategoryDao;
+import com.panda.dataobject.mapper.ProductCategoryMapper;
 import com.panda.repository.ProductCategoryRepository;
 import com.panda.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,13 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ProductCategoryRepository repository;
+
+ //   //可以这直接注入mapper
+//    @Autowired
+//    private ProductCategoryMapper mapper;
+
+//    @Autowired
+//    private ProductCategoryDao dao;
 
     @Override
     public ProductCategory findOne(Integer id) {

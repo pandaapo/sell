@@ -9,6 +9,7 @@ import org.hibernate.annotations.Proxy;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,7 +17,9 @@ import java.util.Date;
 @Data
 @Proxy(lazy = false)
 @DynamicUpdate
-public class ProductInfo {
+public class ProductInfo implements Serializable {
+
+    private static final long serialVersionUID = -1603844380829341352L;
     @Id
     private String productId;
     /** 商品名称 **/

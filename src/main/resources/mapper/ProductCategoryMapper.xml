@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--以下写法已经过时-->
+
+<!--绑定mapper类-->
+<mapper namespace="com.panda.dataobject.mapper.ProductCategoryMapper">
+    <!--绑定返回结果的类-->
+    <resultMap type="com.panda.dataobject.ProductCategory" id="BaseResultMap">
+        <!--clomun是数据库字段名，property是需要映射成的变量-->
+        <id column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="category_type" property="categoryType" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--如果参数是个对象，这里的parameterType写对象的路径-->
+    <select id="selectByCategoryType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select category_id,category_name,category_type
+        from product_category
+        where category_type = #{category_type, jdbcType=INTEGER}
+    </select>
+</mapper>

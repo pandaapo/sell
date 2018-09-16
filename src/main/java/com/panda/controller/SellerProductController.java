@@ -10,6 +10,8 @@ import com.panda.utils.KeyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -117,6 +119,8 @@ public class SellerProductController {
      * @return
      */
     @PostMapping("/save")
+//    //修改时，将缓存删掉
+//    @CacheEvict(cacheNames = "product", key = "123")
     public ModelAndView save(@Valid ProductForm form,
                              BindingResult bindingResult,
                              Map<String, Object> map){

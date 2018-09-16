@@ -2,11 +2,16 @@ package com.panda.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * http请求返回的最外层对象
  */
 @Data
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+
+    private static final long serialVersionUID = 4001907052358723999L;
+
     /** 错误码 **/
     private Integer code;
 

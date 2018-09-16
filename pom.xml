@@ -88,6 +88,8 @@
     </dependencies>
 
     <build>
+        <!--重命名项目部署时打的包名-->
+        <finalName>sell</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -8,6 +8,8 @@ import com.panda.exception.SellException;
 import com.panda.repository.ProductInfoRepository;
 import com.panda.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+// //@CacheConfig(cacheNames = "product")      //这样就不用在每个@Cacheable中写cacheNames了
 public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Autowired
     private ProductInfoRepository repository;
 
     @Override
+//    @Cacheable(cacheNames = "product", key = "123")
     public ProductInfo findOne(String productId) {
         return repository.getOne(productId);
     }
@@ -37,6 +41,7 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     }
 
     @Override
+//    @CachePut(cacheNames = "product", key = "123")
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
     }
